@@ -36,7 +36,7 @@ public class PaiementViewImpl extends ViewImpl<Paiement> implements PaiementView
     @Override
     public void display(List<Paiement> paiements) {
         for (Paiement paiement : paiements) {
-            System.out.println("ID :" + paiement.getId() + " |Montant: " + paiement.getMontant() + " |Dette_id: " + paiement.getDette().getId() + " |Datte: "+ paiement.getCreateAt());
+            System.out.println("ID :" + paiement.getId() + " |Montant: " + paiement.getMontant() + " |Dette_id: " + paiement.getDette_id() + " |Datte: "+ paiement.getCreateAt());
         }
     }
 
@@ -49,22 +49,22 @@ public class PaiementViewImpl extends ViewImpl<Paiement> implements PaiementView
     @Override
     public void save(Utilisateur userConnected, Dette dette) {
        Double montant;
-       Double montantRestant = dette.getMontant() - dette.getMontantVerse();
+       Double montantRestant = dette.getMontant() - dette.getMontant_verse();
        System.out.println("Le montant restant est de: " +montantRestant);
        do {
         System.out.println("Entrer le montant");
         montant = scan.nextDouble();
        } while (montant <=0 || montant > montantRestant);
 
-       Double montantVerse = dette.getMontantVerse() + montant;
+       Double montantVerse = dette.getMontant_verse() + montant;
        if(detteService.checkSolde(montantVerse, dette.getMontant())){
            dette.setStatut(StatutDette.SOLDE);
         }
-        dette.setMontantVerse(montantVerse);
+        dette.setMontant_verse(montantVerse);
 
         Paiement paiement = new Paiement();
         paiement.setMontant(montant);
-        paiement.setDette(dette);
+        paiement.setDette_id(dette.getId());
         paiement.setCreatorUser(userConnected);
         paiement.setUpdateUser(userConnected);
         paiementService.create(paiement);

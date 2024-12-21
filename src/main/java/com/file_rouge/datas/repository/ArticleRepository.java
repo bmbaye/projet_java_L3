@@ -16,5 +16,4 @@ public interface ArticleRepository extends Repository<Article>{
     List<Article> findBYDette(Dette dette);
     List<Article> findByDemande(Demande demande);
     int updateArticle(Article article);
-    String generateInsertRequest(Field[] fields, StringBuilder columns, StringBuilder values);
 }

@@ -21,8 +21,8 @@ public class PaiementServiceImpl extends ServiceImpl<Paiement> implements Paieme
     }
 
     @Override
-    public int  create(Paiement paiement) {
-       return this.paiementRepository.insert(paiement);
+    public void create(Paiement paiement) {
+       this.paiementRepository.insert(paiement);
     }
 
     @Override

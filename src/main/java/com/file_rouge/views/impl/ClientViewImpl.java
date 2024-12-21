@@ -60,8 +60,8 @@ public class ClientViewImpl extends ViewImpl<Client> implements ClientView{
             Role role = roleService.selectByName("CLIENT");
             System.out.println(role.getId());
             System.out.println(role.getNom());
-            compte.setRole(role);
-            compte.setClient(client);
+            compte.setRole_id(role.getId());
+            compte.setClient_id(client.getId());
             compte.setNom(user.getNom());
             compte.setPrenom(user.getPrenom());
             compte.setLogin(user.getLogin());
@@ -74,7 +74,6 @@ public class ClientViewImpl extends ViewImpl<Client> implements ClientView{
         client.setSurname(surname);
         client.setTelephone(telephone);
         client.setAdresse(adresse);
-        client.setUtilisateur(compte);
         client.setCreatorUser(userConnected);
         client.setUpdateUser(userConnected);
 

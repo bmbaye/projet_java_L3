@@ -12,6 +12,7 @@ import com.file_rouge.service.ArticleService;
 import com.file_rouge.service.ClientService;
 import com.file_rouge.service.DemandeService;
 import com.file_rouge.service.DetteService;
+import com.file_rouge.service.UtilisateurService;
 import com.file_rouge.views.ArticleView;
 import com.file_rouge.views.DemandeView;
 import com.file_rouge.views.DetteView;
@@ -28,10 +29,11 @@ public class ClientUserView  extends UserViewImpl{
     ArticleView articleView = articleFactory.getViewInstence();
     ArticleService articleService = articleFactory.getServiceInstence();  
     ClientService clientService = clientFactory.getServiceInstence(); 
+    UtilisateurService utilisateurService = userFactory.getServiceInstence();
 
     public ClientUserView(Utilisateur userConnected){
         this.userConnected = userConnected;
-        this.client = clientService.selectByUserId(userConnected.getId());
+        this.client = clientService.selectById(userConnected.getClient_id());
     }
     
     public void load(){
@@ -95,7 +97,8 @@ public class ClientUserView  extends UserViewImpl{
                 case 2:
                 System.out.println("Entrer l'id de la dette");
                 int id2 = scan.nextInt();
-                Dette dette2 = detteService.selectById(id2);
+                List<Dette> dettes = detteService.findAll();
+                Dette dette2 = detteService.selectById(id2, dettes);
                 if(dette2 ==null){
                     System.out.println("Aucune dette ne porte cette id");
                 }else{

@@ -16,8 +16,8 @@ public class RoleServiceImpl extends ServiceImpl<Role> implements RoleService{
     }
 
     @Override
-    public int create(Role role){
-       return this.roleRepository.insert(role);
+    public void create(Role role){
+       this.roleRepository.insert(role);
     }
 
     @Override

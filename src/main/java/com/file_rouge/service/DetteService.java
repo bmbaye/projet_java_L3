@@ -11,7 +11,6 @@ import com.file_rouge.datas.enums.StatutDette;
 public interface DetteService extends Service<Dette> {
     List<Dette> selectByStatuDette(StatutDette statut);
     boolean checkSolde(Double montant, Double montantVerse);
-    Dette selectById(int id);
     Dette selectById(int id, List<Dette> dettes);
     void update(Dette dette);
     List<Dette> selectByClient(Client client, StatutDette statut);

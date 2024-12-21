@@ -58,8 +58,8 @@ public class UtilisateurViewImpl extends ViewImpl<Utilisateur> implements Utilis
     @Override
     public Utilisateur saisie(Client client, Role role, Utilisateur userConnected) {
        Utilisateur utilisateur = this.saisie(userConnected);
-        utilisateur.setClient(client);
-        utilisateur.setRole(role);
+        utilisateur.setClient_id(client.getId());
+        utilisateur.setRole_id(role.getId());
 
         return utilisateur;
     }
@@ -90,7 +90,7 @@ public class UtilisateurViewImpl extends ViewImpl<Utilisateur> implements Utilis
     @Override
     public Utilisateur saisie(Role role, Utilisateur userConnected) {
         Utilisateur utilisateurs = this.saisie(userConnected );
-        utilisateurs.setRole(role);
+        utilisateurs.setRole_id(role.getId());
 
         return utilisateurs;
     }

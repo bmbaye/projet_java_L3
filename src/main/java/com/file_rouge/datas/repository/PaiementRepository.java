@@ -9,5 +9,5 @@ import com.file_rouge.datas.entities.Paiement;
 
 public interface PaiementRepository extends Repository<Paiement> {
     List<Paiement> getByDette(Dette dette);
-    String generateInsertRequest(Field[] fields, StringBuilder columns, StringBuilder values);
+    Paiement findById(int id);
 }

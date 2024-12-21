@@ -1,6 +1,0 @@
-persistence: DETTES
-
-repository:
-  client: com.file_rouge.datas.repository.impl.ClientRepositoryImpl
-  compte: com.file_rouge.datas.repository.impl.CompteRepositoryImpl
-  role: com.file_rouge.datas.repository.impl.RoleRepositoryImpl

@@ -24,8 +24,8 @@ public class ArticleServiceImpl extends ServiceImpl<Article> implements ArticleS
     }
 
     @Override
-    public int create(Article article) {
-        return this.articleRepository.insert(article);
+    public void create(Article article) {
+        this.articleRepository.insert(article);
     }
 
     @Override

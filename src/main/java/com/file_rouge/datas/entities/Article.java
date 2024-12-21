@@ -1,35 +1,22 @@
 package com.file_rouge.datas.entities;
 
-import java.util.List;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
-
-@Table(name = "article")
-@Entity
 public class Article extends AbstractEntity{
 
-    @Column (name = "reference", length = 10)
     private String reference;
 
-    @Column (name = "libelle", length = 30)
     private String libelle;
 
-    @Column (name = "prix")
     private Double prix;
 
 
-    @Column(name ="qteStock")
     private int qteStock;
 
-    @OneToMany(mappedBy = "article")
-    private List<Detail> details;
+    private static int count;
 
     public Article() {
         super();
+        count++;
+        this.id = count;
     }
 
     public Article(String reference, String libelle, Double prix) {
@@ -63,24 +50,12 @@ public class Article extends AbstractEntity{
         this.prix = prix;
     }
 
-    public List<Detail> getDetails() {
-        return details;
-    }
-
-    public void setDetails(Detail detail) {
-        this.details.add(detail) ;
-    }
-
     public int getQteStock() {
         return qteStock;
     }
 
     public void setQteStock(int qteStock) {
         this.qteStock = qteStock;
-    }
-
-    public void setDetails(List<Detail> details) {
-        this.details = details;
     }
 
     @Override

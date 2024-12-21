@@ -2,60 +2,40 @@ package com.file_rouge.datas.entities;
 
 import com.file_rouge.datas.enums.Etat;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 
-import lombok.ToString;
-
-
-
-@ToString( exclude = {"client", "role", "etat"})
-@Entity
-@Table (name = "utilisateur")
 public class Utilisateur extends AbstractEntity{
 
-    @Column(name =  "nom", length = 35)
     private String nom;
 
-    @Column(name = "prenom", length = 35)
     private String prenom;
 
-    @Column(unique = true, name = "login")
     private String login;
 
-    @Column(name = "password")
     private String password;
 
-    @ManyToOne()
-    @JoinColumn(name = "role_id")
-    private Role role;
+    private int role_id;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "etat")
     private Etat etat;
 
-    @OneToOne(mappedBy = "utilisateur")
-    private Client client;
+    private Integer client_id;
 
-    public Utilisateur() {
-        super();
-    }
+    private static int count;
 
-    public Utilisateur(String nom, String prenom, String login, String password, Role role, Etat etat, Client client) {
+    public Utilisateur(String nom, String prenom, String login, String password, int role_id, Etat etat,
+            int client_id) {
         this.nom = nom;
         this.prenom = prenom;
         this.login = login;
         this.password = password;
-        this.role = role;
+        this.role_id = role_id;
         this.etat = etat;
-        this.client = client;
+        this.client_id = client_id;
+    }
+
+    public Utilisateur() {
+        super();
+        count++;
+        setId(count);
     }
 
     public String getNom() {
@@ -90,12 +70,12 @@ public class Utilisateur extends AbstractEntity{
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public int getRole_id() {
+        return role_id;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
     }
 
     public Etat getEtat() {
@@ -106,11 +86,12 @@ public class Utilisateur extends AbstractEntity{
         this.etat = etat;
     }
 
-    public Client getClient() {
-        return client;
+    public int getClient_id() {
+        return client_id;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient_id(int client_id) {
+        this.client_id = client_id;
     }
+
 }

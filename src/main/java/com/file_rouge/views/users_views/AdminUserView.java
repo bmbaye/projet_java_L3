@@ -88,10 +88,10 @@ public class AdminUserView extends UserViewImpl{
                                     Utilisateur user = userView.saisie(this.userConnected);
                                     if(c ==1){
                                         role = roleService.selectByName("BOUTIQUIER");
-                                        user.setRole(role);
+                                        user.setRole_id(role.getId());
                                     }else if(c ==2){
                                         role = roleService.selectByName("ADMIN");
-                                        user.setRole(role);
+                                        user.setRole_id(role.getId());
                                     }
                                     userService.create(user);
                                 }
@@ -102,7 +102,8 @@ public class AdminUserView extends UserViewImpl{
                     } while (c !=3);
                     break;
                 case 2:
-                    List<Client> clients = clientService.filterByCompte(0);
+                    List<Utilisateur> list = userService.findAll();
+                    List<Client> clients = clientService.filterByCompte(0, list);
                     if (clients.size() > 0) {
                         clientView.display(clients);
                         String tel;
@@ -114,10 +115,10 @@ public class AdminUserView extends UserViewImpl{
                             if(cl !=null){
                                 Role role = roleService.selectByName("CLIENT");
                                 Utilisateur user =userView.saisie(cl, role, this.userConnected);
-                                int id_user = userService.create(user);
+                                userService.create(user);
+                                int id_user = user.getId();
                                 Utilisateur utilisateur = new Utilisateur();
                                 utilisateur.setId(id_user);
-                                cl.setUtilisateur(utilisateur);
                                 clientService.modifier(cl);
                                 break;
                             }

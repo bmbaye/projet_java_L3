@@ -23,8 +23,8 @@ public class UtilisateurServiceImpl extends ServiceImpl<Utilisateur> implements 
     }
 
     @Override
-    public int create(Utilisateur object) {
-        return this.utilisateurRepository.insert(object);
+    public void create(Utilisateur object) {
+        this.utilisateurRepository.insert(object);
     }
 
     @Override

@@ -35,10 +35,10 @@ public class Main {
             }else{
                 UserViewFactory userViewFactory = new UserViewFactory(userConnected);
         
-                if(userConnected.getRole().getId() == 1){
+                if(userConnected.getRole_id() == 1){
                     ClientUserView clientView =userViewFactory.getClientView();
                     clientView.load();
-                }else if(userConnected.getRole().getId() == 2){
+                }else if(userConnected.getRole_id() == 2){
                     BoutiquierUserView boutiquierView = userViewFactory.getBoutiquierView();
                     boutiquierView.load();
         

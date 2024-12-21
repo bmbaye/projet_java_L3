@@ -2,7 +2,7 @@ package com.file_rouge.core.Factory.impl;
 
 import com.file_rouge.core.Factory.IFactory;
 import com.file_rouge.datas.repository.RoleRepository;
-import com.file_rouge.datas.repository.Jpa_impl.RoleRepositoryImpl;
+import com.file_rouge.datas.repository.impl.RoleRepositoryImpl;
 import com.file_rouge.service.impl.RoleServiceImpl;
 
 public class RoleFactoryImpl implements IFactory{

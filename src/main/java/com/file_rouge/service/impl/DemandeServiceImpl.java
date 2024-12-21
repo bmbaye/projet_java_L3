@@ -25,8 +25,8 @@ public class DemandeServiceImpl extends ServiceImpl<Demande> implements DemandeS
     }
 
     @Override
-    public int create(Demande demande) {
-       return this.demandeRepository.insert(demande);
+    public void create(Demande demande) {
+       this.demandeRepository.insert(demande);
     }
 
     @Override

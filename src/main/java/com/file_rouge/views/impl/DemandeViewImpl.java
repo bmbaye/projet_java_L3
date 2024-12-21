@@ -17,6 +17,7 @@ import com.file_rouge.datas.entities.Utilisateur;
 import com.file_rouge.datas.enums.EtatDemande;
 import com.file_rouge.datas.enums.StatutDette;
 import com.file_rouge.service.ArticleService;
+import com.file_rouge.service.ClientService;
 import com.file_rouge.service.DemandeArticleService;
 import com.file_rouge.service.DemandeService;
 import com.file_rouge.service.DetailService;
@@ -31,6 +32,7 @@ public class DemandeViewImpl extends ViewImpl<Demande> implements DemandeView  {
     DemandeArticleService demandeArticleService;
     DetteService detteService;
     DetailService detailService;
+    ClientService clientService;
 
     public DemandeViewImpl(){
         if(this.scan == null){
@@ -42,6 +44,7 @@ public class DemandeViewImpl extends ViewImpl<Demande> implements DemandeView  {
         this.demandeArticleService = this.demandeArticleFactory.getServiceInstence();
         this.detteService = detteFactory.getServiceInstence();
         this.detailService = detailFactory.getServiceInstence();
+        this.clientService = clientFactory.getServiceInstence();
     }
     @Override
     public Demande saisie(Utilisateur userConnected) {
@@ -83,7 +86,7 @@ public class DemandeViewImpl extends ViewImpl<Demande> implements DemandeView  {
                 int qte;
                 DemandeArticle d = null;
                 for(DemandeArticle det : details){
-                    if(det.getArticle().equals(article)){
+                    if(det.getArticle_id()== article.getId()){
                         d=det;
                         System.out.println("Cet article est deja choisi. Ajouter une quantite");
                         qte = scan.nextInt();
@@ -96,7 +99,7 @@ public class DemandeViewImpl extends ViewImpl<Demande> implements DemandeView  {
                         qte = scan.nextInt();
                         montant = montant +(qte *article.getPrix());
                         detail.setQuantite(qte);
-                        detail.setArticle(article);
+                        detail.setArticle_id(article.getId());
                         detail.setCreatorUser(userConnected);
                         detail.setUpdateUser(userConnected);
                         details.add(detail);
@@ -108,16 +111,17 @@ public class DemandeViewImpl extends ViewImpl<Demande> implements DemandeView  {
        } while (ref !="");
 
        if(details.size() >0){
-         demande.setClient(client);
+         demande.setClient_id(client.getId());
          demande.setMontant(montant);
          demande.setEtat(EtatDemande.ENCOURS);
          demande.setCreatorUser(userConnected);
          demande.setUpdateUser(userConnected);
 
-         int demande_id = demandeService.create(demande);
+         int demande_id = demande.getId();
+         demandeService.create(demande);
          for(DemandeArticle detail: details){
             demande.setId(demande_id);
-            detail.setDemande(demande);
+            detail.setDemande_id(demande_id);
             demandeArticleService.create(detail);
          }
        }
@@ -137,7 +141,7 @@ public class DemandeViewImpl extends ViewImpl<Demande> implements DemandeView  {
 
         if(rep ==1){
             Map<String, Object> errors = this.checkDemande(demande);
-            Client client = demande.getClient();
+            Client client = clientService.selectById(demande.getClient_id());  
             if(errors.size() !=0){
                 for (Map.Entry<String, Object> entry : errors.entrySet()) {
                     System.out.println(entry.getValue());
@@ -147,21 +151,23 @@ public class DemandeViewImpl extends ViewImpl<Demande> implements DemandeView  {
             demande.setEtat(EtatDemande.ACCEPTEE);
             demandeService.update(demande);
             Dette dette = new Dette();
-            dette.setClient(client);
+            dette.setClient_id(client.getId());
             dette.setMontant(demande.getMontant());
             dette.setStatut(StatutDette.NON_SOLDE);
-            dette.setMontantVerse(0.0);
+            dette.setMontant_verse(0.0);
             detteService.create(dette);
+            List<DemandeArticle> demandeArticles = demandeArticleService.selectByDemande(demande);
 
-            for (DemandeArticle demandeArt : demande.getDemandeArticles()) {
-                Article article = demandeArt.getArticle();
+            for (DemandeArticle demandeArt : demandeArticles) {
+                Article article = articleService.selectById(demandeArt.getArticle_id());
                 int qte = article.getQteStock() - demandeArt.getQuantite();
                 article.setQteStock(qte);
                 articleService.update(article);
                 Detail detail = new Detail();
-                detail.setArticle(article);
-                detail.setDette(dette);
-                detail.setPrixVente(demandeArt.getArticle().getPrix());
+                detail.setArticle_id(article.getId());
+                detail.setDette_id(dette.getId());
+                Article ar = articleService.selectById(demandeArt.getArticle_id());
+                detail.setPrixVente(ar.getPrix());
                 detail.setQteVendue(demandeArt.getQuantite());
                 detailService.create(detail);
             }
@@ -175,9 +181,9 @@ public class DemandeViewImpl extends ViewImpl<Demande> implements DemandeView  {
 
     public Map<String, Object> checkDemande(Demande demande){
         Map<String, Object> errors = new HashMap<>();
-        List<DemandeArticle> details = demande.getDemandeArticles();
+        List<DemandeArticle> details = demandeArticleService.selectByDemande(demande);
         for (DemandeArticle detail : details) {
-            Article art = detail.getArticle();
+            Article art = articleService.selectById(detail.getArticle_id());
             if(detail.getQuantite() > art.getQteStock()){
                 errors.put(art.getReference(), "La quantite demandee pour "+art.getReference()+" n'existe pas en stock");
             }

@@ -13,6 +13,7 @@ import com.file_rouge.service.ArticleService;
 import com.file_rouge.service.ClientService;
 import com.file_rouge.service.DemandeService;
 import com.file_rouge.service.DetteService;
+import com.file_rouge.service.UtilisateurService;
 import com.file_rouge.views.ArticleView;
 import com.file_rouge.views.ClientView;
 import com.file_rouge.views.DemandeView;
@@ -24,6 +25,7 @@ public class BoutiquierUserView extends UserViewImpl{
 
     ClientView clientView = clientFactory.getViewInstence();
     ClientService clientService = clientFactory.getServiceInstence();
+    UtilisateurService utilisateurService = userFactory.getServiceInstence();
     DetteView detteView = detteFactory.getViewInstence();
     DetteService detteService = detteFactory.getServiceInstence();
     PaiementView paiementView   = paiementFactory.getViewInstence();
@@ -104,12 +106,13 @@ public class BoutiquierUserView extends UserViewImpl{
             System.out.println("3.Recherche par telephone");
             System.out.println("4.Retour");
             rep =scan.nextInt();
+            List<Utilisateur> listUser = utilisateurService.findAll();
             switch (rep) {
                 case 1:
-                    clientView.display(clientService.filterByCompte(1));
+                    clientView.display(clientService.filterByCompte(1, listUser));
                     break;
                 case 2:
-                    clientView.display(clientService.filterByCompte(0));
+                    clientView.display(clientService.filterByCompte(0, listUser));
                     break;
                 case 3:
                     scan.nextLine();
@@ -239,7 +242,7 @@ public class BoutiquierUserView extends UserViewImpl{
         id = scan.nextInt();
         dette = detteService.selectById(id, dettes);
         if(dette !=null){
-            if (dette.getMontant() > dette.getMontantVerse()) {
+            if (dette.getMontant() > dette.getMontant_verse()) {
                 paiementView.save(this.userConnected, dette);
             }else{
                 System.out.println("Cette dette est deja soldee !!");

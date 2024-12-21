@@ -1,32 +1,24 @@
 package com.file_rouge.datas.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "demande_article")
 public class DemandeArticle extends AbstractEntity{
-    @Column(name = "quantite")
     private int quantite;
 
-    @ManyToOne
-    @JoinColumn(name = "demande_id")
-    private Demande demande;
+    private int demande_id;
 
-    @ManyToOne
-    @JoinColumn(name = "article_id")
-    private Article article;
+    private int article_id;
 
-    public DemandeArticle(int quantite, Demande demande, Article article) {
-        this.quantite = quantite;
-        this.demande = demande;
-        this.article = article;
-    }
+    private static int count;
 
     public DemandeArticle() {
+        super();
+        count++;
+        super.id = count;
+    }
+
+    public DemandeArticle(int quantite, int demande_id, int article_id) {
+        this.quantite = quantite;
+        this.demande_id = demande_id;
+        this.article_id = article_id;
     }
 
     public int getQuantite() {
@@ -37,19 +29,30 @@ public class DemandeArticle extends AbstractEntity{
         this.quantite = quantite;
     }
 
-    public Demande getDemande() {
-        return demande;
+    public int getDemande_id() {
+        return demande_id;
     }
 
-    public void setDemande(Demande demande) {
-        this.demande = demande;
+    public void setDemande_id(int demande_id) {
+        this.demande_id = demande_id;
     }
 
-    public Article getArticle() {
-        return article;
+    public int getArticle_id() {
+        return article_id;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setArticle_id(int article_id) {
+        this.article_id = article_id;
     }
+
+    public static int getCount() {
+        return count;
+    }
+
+    public static void setCount(int count) {
+        DemandeArticle.count = count;
+    }
+    
+
+ 
 }

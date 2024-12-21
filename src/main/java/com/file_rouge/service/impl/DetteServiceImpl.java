@@ -23,17 +23,13 @@ public class DetteServiceImpl extends ServiceImpl<Dette> implements DetteService
     }
 
     @Override
-    public int create(Dette dette) {
-        return this.detteRepository.insert(dette);
+    public void create(Dette dette) {
+        this.detteRepository.insert(dette);
     }
 
     @Override
     public List<Dette> selectByStatuDette(StatutDette statut) {
         return this.detteRepository.getByStatut(statut);
-    }
-    @Override
-    public Dette selectById(int id) {
-        return this.detteRepository.findById(id);
     }
     @Override
     public void update(Dette dette) {

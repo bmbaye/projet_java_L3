@@ -1,45 +1,33 @@
 package com.file_rouge.datas.entities;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
-
-
-
-@Entity
-@Table(name = "detail")
-@EqualsAndHashCode(of = {"dette", "article"}, callSuper = false)
 public class Detail extends AbstractEntity{
 
-    @Column(name =  "prix_vente")
     private Double prixVente;
 
-    @Column(name = "qte_vendue")
-    private Integer qteVendue;
+    private int qteVendue;
     
-    @ManyToOne
-    @JoinColumn(name = "dette_id")
-    private Dette dette;
+    private int dette_id;
 
-    @ManyToOne
-    @JoinColumn(name = "article_id")
-    private Article article;
+    private int article_id;
 
-    public Detail(Double prixVente, Integer qteVendue, Dette dette, Article article) {
-        super();
+    private static int count;
+
+    public Detail(Double prixVente, int qteVendue, int dette_id, int article_id) {
         this.prixVente = prixVente;
         this.qteVendue = qteVendue;
-        this.dette = dette;
-        this.article = article;
+        this.dette_id = dette_id;
+        this.article_id = article_id;
     }
+
+
 
     public Detail() {
         super();
+        count++;
+        super.id = count;
     }
+
+
 
     public Double getPrixVente() {
         return prixVente;
@@ -49,29 +37,28 @@ public class Detail extends AbstractEntity{
         this.prixVente = prixVente;
     }
 
-    public Integer getQteVendue() {
+    public int getQteVendue() {
         return qteVendue;
     }
 
-    public void setQteVendue(Integer qteVendue) {
+    public void setQteVendue(int qteVendue) {
         this.qteVendue = qteVendue;
     }
 
-    public Dette getDette() {
-        return dette;
+    public int getDette_id() {
+        return dette_id;
     }
 
-    public void setDette(Dette dette) {
-        this.dette = dette;
+    public void setDette_id(int dette_id) {
+        this.dette_id = dette_id;
     }
 
-    public Article getArticle() {
-        return article;
+    public int getArticle_id() {
+        return article_id;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setArticle_id(int article_id) {
+        this.article_id = article_id;
     }
-
     
 }

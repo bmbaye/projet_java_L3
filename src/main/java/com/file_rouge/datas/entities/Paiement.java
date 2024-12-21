@@ -1,29 +1,22 @@
 package com.file_rouge.datas.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "paiement")
 public class Paiement extends AbstractEntity {
     
-    @Column(name = "montant")
-    private Double montant;
-
-    @ManyToOne
-    @JoinColumn(name = "dette_id")
-    private Dette dette;
-
-    public Paiement() {
+    public Paiement(Double montant, int dette_id) {
+        this.montant = montant;
+        this.dette_id = dette_id;
     }
 
-    public Paiement(Double montant, Dette dette) {
+    private Double montant;
+
+    private int dette_id;
+
+    private static int count;
+
+    public Paiement() {
         super();
-        this.montant = montant;
-        this.dette = dette;
+        count++;
+        setId(count);
     }
 
     public Double getMontant() {
@@ -34,11 +27,20 @@ public class Paiement extends AbstractEntity {
         this.montant = montant;
     }
 
-    public Dette getDette() {
-        return dette;
+    public int getDette_id() {
+        return dette_id;
     }
 
-    public void setDette(Dette dette) {
-        this.dette = dette;
+    public void setDette_id(int dette_id) {
+        this.dette_id = dette_id;
     }
+
+    public static int getCount() {
+        return count;
+    }
+
+    public static void setCount(int count) {
+        Paiement.count = count;
+    }
+
 }

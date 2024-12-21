@@ -1,20 +1,17 @@
 package com.file_rouge.datas.entities;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 
 
 @EqualsAndHashCode(of = {"nom"}, callSuper = false)
-@Entity
-@Table(name = "role")
+
 public class Role extends AbstractEntity{
-    @Column(name =  "nom", unique = true)
     private String nom;
+    private static int count;
 
     public Role() {
         super();
+        count++;
+        setId(count);
     }
 
     public Role(String nom) {

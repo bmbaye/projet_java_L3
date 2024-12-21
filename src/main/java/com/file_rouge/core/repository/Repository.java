@@ -5,9 +5,6 @@ import java.util.Map;
 import java.lang.reflect.Field;
 
 public interface Repository<T> {
-    Object findBy(Object object);
     List<T> findAll();
-    int insert(T object);
-    StringBuilder generateUpdateRequete(int id, Map<String, Object> colonnes);
-    String generateUpdateRequete(Field[] fields);
+    void insert(T object);
 }

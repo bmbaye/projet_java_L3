@@ -3,6 +3,7 @@ package com.file_rouge.service.impl;
 import java.util.List;
 
 import com.file_rouge.core.Service.impl.ServiceImpl;
+import com.file_rouge.datas.entities.Demande;
 import com.file_rouge.datas.entities.DemandeArticle;
 import com.file_rouge.datas.repository.DemandeArticleRepository;
 import com.file_rouge.service.DemandeArticleService;
@@ -21,8 +22,13 @@ public class DemandeArticleServiceImpl extends ServiceImpl<DemandeArticle> imple
     }
 
     @Override
-    public int create(DemandeArticle object) {
-        return this.demandeArticleReposi.insert(object);
+    public void create(DemandeArticle object) {
+        this.demandeArticleReposi.insert(object);
+    }
+
+    @Override
+    public List<DemandeArticle> selectByDemande(Demande demande) {
+        return this.demandeArticleReposi.findByDemande(demande);
     }
     
 }

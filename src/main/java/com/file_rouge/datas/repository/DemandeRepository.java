@@ -15,5 +15,4 @@ public interface DemandeRepository extends Repository<Demande> {
     List<Demande> getByClient(Client client);
     Demande findById(int id);
     int update(Demande demande);
-    String generateInsertRequest(Field[] fields, StringBuilder columns, StringBuilder values);
 }
